@@ -3,14 +3,23 @@ import styled from 'styled-components';
 import BackgroundImage from '../components/BackgroundImage';
 import Header from '../components/Header';
 
-const Container = styled.div;
-
 const Signup = () => {
+const Container = styled.div``;
   return (
     <Container>
         <BackgroundImage />
         <Header />
-        <div className="body flex column a-center j-center"></div>
+        <div className="body flex column a-center j-center">
+            <h1>Unlimited movies, TV shows and more</h1>
+            <h4>Watch anywhere. Cancel anytime.</h4>
+            <h6>Ready to watch? Enter your email to restart  membership</h6>
+        </div>
+        <div className='form'>
+            <input type="email" placeholder='Email Address' name='email' />
+            <input type='password' placeholder='Password' name='password'/>
+            <button>Get Started</button>
+        </div>
+        <button>Log In</button>
     </Container>
   )
 }

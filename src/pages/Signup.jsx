@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import BackgroundImage from '../components/BackgroundImage';
 import Header from '../components/Header';
 
 const Signup = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  })
 
   const Container = styled.div`
     position: relative;
@@ -28,21 +33,44 @@ const Signup = () => {
       }
       .form {
          display: grid;
+         grid-template-column: ${({showPassword})=> showPassword ? "1fr 1fr": "2fr 1fr"};
          width: 60%;
          input{
           color:black;
           border: none;
           padding: 1.5rem;
-          font-size: 1.3rem;
-          border: 1px solid black;   
+          font-size: 1.2rem;
+          border: 1px solid black;
+          &:focus{
+            outline: none;
+          }
          }
+         button {
+          padding: 0.5rem 1rem;
+          background-color:#e50914;
+          border: none;
+          cursor: pointer;
+          color: white;
+          font-weight: bolder;
+          font-size: 1.05rem; 
+         }
+      }
+      button {
+        padding: 0.5rem 1rem;
+        background-color:#e50914;
+        border: none;
+        cursor: pointer;
+        color: white;
+        border-radius: 0.2rem;
+        font-weight: bolder;
+        font-size: 1.05rem; 
       }
     }
   }  
 `;
 
   return (
-    <Container>
+    <Container showPassword={showPassword}>
         <BackgroundImage />
         <div className='content'>
           <Header login />
@@ -53,11 +81,22 @@ const Signup = () => {
               <h6>Ready to watch? Enter your email to restart  membership</h6>
             </div>
             <div className='form'>
-              <input type="email" placeholder='Email Address' name='email' />
-              <input type='password' placeholder='Password' name='password'/>
-              <button>Get Started</button>
+              <input 
+                type="email" 
+                placeholder='Email Address' 
+                name='email'  
+                value={formValues.email} 
+                onChange={(e) => 
+                  setFormValues({
+                    ...formValues,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+              />
+              { showPassword &&  (<input type='password' placeholder='Password' name='password'/>)}
+              { !showPassword && (<button onClick={ ()=> setShowPassword(true)}>Get Started</button> )}
           </div>
-          <button>Log In</button>
+          <button>Sign Up</button>
           </div>
         </div>  
     </Container>

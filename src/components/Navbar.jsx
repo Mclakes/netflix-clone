@@ -2,7 +2,9 @@ import React, { useState }from 'react';
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-import {FaSearch} from "react-icons/fa"
+import { FaPowerOff, FaSearch } from "react-icons/fa"
+import { firebaseAuth } from '../utils/firebase-config';
+import { signOut } from 'firebase/auth';
 
 const Navbar = ({ isScrolled }) => {
 
@@ -16,17 +18,15 @@ const Navbar = ({ isScrolled }) => {
     {name: "My List", link: "/mylist"},
   ];  
 
-  const Container = styled.div``;
-
   return (
     <Container>
-      <nav className={`flex ${ isScrolled ? 'scrolled': "" }`}>
+      <nav className={`flex ${ isScrolled ? "scrolled": "" }`}>
         <div className="left flex a-center">
           <div className='brand flex a-center j-center'>
             <img src={logo} alt="logo"/>
           </div>
           <ul className='links flex'>
-            {links.map((name, link)=>{
+            {links.map(({name, link})=>{
               return(
                 <li key={name}>
                   <Link to={link}>{name}</Link>
@@ -51,13 +51,17 @@ const Navbar = ({ isScrolled }) => {
                   setShowSearch(false);
                   setInputHover(false)
                 }}
-
               />
             </div>
+            <button onClick={()=> signOut(firebaseAuth)}>
+              <FaPowerOff />
+            </button>
         </div>
       </nav>
     </Container>
   )
 }
 
-export default Navbar
+const Container = styled.div``;
+
+export default Navbar;

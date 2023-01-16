@@ -1,22 +1,29 @@
 import React, { useState }from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { FaPowerOff, FaSearch } from "react-icons/fa"
 import { firebaseAuth } from '../utils/firebase-config';
-import { signOut } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 const Navbar = ({ isScrolled }) => {
-
-  const [showSearch, setShowSearch] = useState(false);
-  const [inputHover, setInputHover] = useState(false);
   
   const links = [
     {name: "Home", link: "/"},
     {name: "TV Shows", link: "/tv"},
     {name: "Movies", link: "/movies"},
     {name: "My List", link: "/mylist"},
-  ];  
+  ];
+
+  // const navigate = useNavigate();
+
+    // onAuthStateChanged(firebaseAuth, (currentUser)=>{
+    //   if (!currentUser) navigate("/login"); 
+    // })
+
+  const [showSearch, setShowSearch] = useState(false);
+  const [inputHover, setInputHover] = useState(false);
+
 
   return (
     <Container>
@@ -54,7 +61,6 @@ const Navbar = ({ isScrolled }) => {
               />
             </div>
             <button onClick={()=> {
-              alert("hello")
               signOut(firebaseAuth)
               }}>
               <FaPowerOff />

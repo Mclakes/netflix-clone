@@ -23,6 +23,14 @@ const creatArrayFromRawData = (array, moviesArray, genres) => {
             const name = genres.find(({id})=> id===genre);
             if(name) movieGenres.push(name.name)
         })
+        if(movie.backdrop_path){
+            moviesArray.push({
+                id: movie.id,
+                name: movie?.original_name ? movie.original_name: movie.original_title,
+                image: movie.backdrop_path,
+                genres: movieGenres.slice(0, 3)
+            })
+        }
     })
 }
 

@@ -12,26 +12,28 @@ import { fetchMovies, getGenres } from '../store';
 
 const NetFlix = () => {
 
-  const [isScrolled, setIsScrolled] = useState(false) ;
-  const navigate = useNavigate();  
-  const genresLoaded = useSelector((state)=>state.netflix.genresLoaded);
+  const [isScrolled, setIsScrolled] = useState(false) ; 
+  const genresLoaded = useSelector((state)=> state.netflix.genresLoaded);
+  const movies = useSelector((state)=> state.netflix.movies);
+
   
+  const navigate = useNavigate(); 
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(getGenres())
-  },[])
+    dispatch(getGenres());
+  }, []);
 
   useEffect(() => {
-    if(genresLoaded) dispatch(fetchMovies({type: "all"}))
-  })
+    if(genresLoaded) { dispatch(fetchMovies({ type: "all"}))};
+  })  
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false :true );
     return ()=> (window.onscroll = null);
   };
 
-  
+  console.log(movies);
 
   return (
     <Container>

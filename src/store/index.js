@@ -5,7 +5,7 @@ import { API_KEY, TMBD_BASE_URL } from "../utils/constants";
 const initialState = {
     movies: [],
     genresLoades: false,
-    genre: [],
+    genres: [],
 }
 
 export const getGenres = createAsyncThunk("netflix/genres", async () =>{
@@ -20,7 +20,7 @@ const createArrayFromRawData = ( array, moviesArray, genres) => {
     // console.log(array)
     array.forEach((movie) => {
         const movieGenres = [];
-        movie.genre_id.forEach((genre)=>{
+        movie.genre_ids.forEach((genre)=>{
             const name = genres.find(({id})=> id === genre);
             if(name) movieGenres.push(name.name)
         })
@@ -38,7 +38,7 @@ const createArrayFromRawData = ( array, moviesArray, genres) => {
 const getRawData = async (api, genres, paging )=> {
     const moviesArray = [];
     for (let i=1; moviesArray.length < 60 && i < 10 ; i++ ) {
-        const {data: {results}} = await axios.get(`${api}${paging? `&page=${i}` : "" }`);
+        const {data: {results}} = await axios.get(`${api}${paging ? `&page=${i}` : "" }`);
         createArrayFromRawData(results, moviesArray, genres)
         return moviesArray;
     }
